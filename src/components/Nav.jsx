@@ -1,6 +1,10 @@
 // Nav.jsx
 import React, { useState } from "react";
-import { faHeart, faPerson, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faPerson,
+  faShoppingCart,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "@material-tailwind/react";
 import DrawerRight from "./Drawer";

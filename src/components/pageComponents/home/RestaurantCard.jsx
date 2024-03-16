@@ -9,23 +9,30 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
+import { WishContext } from "../../../context/WishContext";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RestaurantCard({ restaurant }) {
   const [isFavorite, setIsFavorite] = useState(false);
+  const { addToWish, removeFromWish } = React.useContext(WishContext);
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    // Here you can send a request to your backend to add/remove from favorites
     if (!isFavorite) {
-      // Send a request to add restaurant to favorites
-      console.log("Adding to favorites:", restaurant.name);
+      // If not in wishlist, add to wishlist
+      addToWish(restaurant, restaurant.id);
+      toast.success(`${restaurant.name} added to wishlist`);
     } else {
-      // Send a request to remove restaurant from favorites
-      console.log("Removing from favorites:", restaurant.name);
+      // If already in wishlist, remove from wishlist
+      removeFromWish(restaurant.id);
+      toast.success(`${restaurant.name} removed from wishlist`);
+
     }
   };
 
   return (
+    <>
     <Card className="mt-6 w-[200px] shadow-lg shadow-gray-600 ">
       <CardHeader color="blue-gray" className="">
         <img
@@ -57,6 +64,9 @@ export default function RestaurantCard({ restaurant }) {
           Visit now
         </Button>
       </CardBody>
+      
     </Card>
+    
+    </>
   );
 }

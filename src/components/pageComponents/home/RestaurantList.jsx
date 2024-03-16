@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 
 const rest = [
-  { name: "McDonald's" },
-  { name: "Taco Bell" },
-  { name: "KFC" },
-  { name: "Burger King" },
-  { name: "Wendy's" },
-  { name: "Popeyes" },
-  { name: "Dairy Queen" },
-  { name: "Carl's Jr." },
-  { name: "Arby's" },
-  { name: "Chick-fil-A" },
-  { name: "In-N-Out" },
-  { name: "Jimmy John's" },
-  { name: "Panera Bread" },
-  { name: "Subway" },
+  { id: 1, name: "McDonald's" },
+  { id: 2, name: "Taco Bell" },
+  { id: 3, name: "KFC" },
+  { id: 4, name: "Burger King" },
+  { id: 5, name: "Wendy's" },
+  { id: 6, name: "Popeyes" },
+  { id: 7, name: "Dairy Queen" },
+  { id: 8, name: "Carl's Jr." },
+  { id: 9, name: "Arby's" },
+  { id: 10, name: "Chick-fil-A" },
+  { id: 11, name: "In-N-Out" },
+  { id: 12, name: "Jimmy John's" },
+  { id: 13, name: "Panera Bread" },
+  { id: 14, name: "Subway" },
 ];
 
 export default function RestaurantList() {
@@ -35,7 +35,6 @@ export default function RestaurantList() {
             </div>
           ))}
         </div>
- 
       </div>
       <div className="flex self-end mt-3">
         {visibleRestaurants < rest.length && (
