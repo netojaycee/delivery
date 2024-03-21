@@ -14,21 +14,21 @@ const SpecialLayout = () => {
         <Loader />
       ) : (
         <div className="flex flex-row ">
-          <div className="p-4 pt-0 h-screen flex-[30%] hidden md:block border-r-4 border-gray-400">
+          <span className="p-4 pt-0 h-screen flex-[30%] hidden md:block border-r-4 border-gray-400">
             <SideBar />
-          </div>
+          </span>
 
-          <div className="flex flex-col overflow-x-hidden w-full">
+          <span className="flex flex-col overflow-x-hidden w-full">
             <SpecialNav />
 
-            <main className=" p-4 overflow-y-auto">
+            <span className=" p-4 overflow-y-auto">
               <Outlet />
-            </main>
+            </span>
 
             <SpecialFooter />
-          </div>  
+          </span>  
         </div>
-      )}
+      )} 
     </>
   );
 };

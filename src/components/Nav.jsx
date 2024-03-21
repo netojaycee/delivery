@@ -56,7 +56,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className="w-full py-5 shadow-md bg-white mb-5">
+    <nav className="w-full py-3 shadow-md bg-white mb-5">
       <div className="flex items-center justify-between w-[90%] mx-auto">
         <div className="flex items-center mr-2">
           <Link to={"/"}>

@@ -12,7 +12,7 @@ const useRefreshToken = () => {
 
     if (!token || !profile) {
       // Redirect to action page if token or profile is missing
-      return <Navigate to="/action" state={{ from: location }} replace />;
+      return <Navigate to="/" state={{ from: location }} replace />;
     }
 
     // Set authentication state with retrieved profile and token

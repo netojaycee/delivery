@@ -29,7 +29,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/restaurant/*" element={<Restaurant />} />
-            <Route path="/checkout" element={<Checkout />} />
+            {/* <Route path="/checkout" element={<Checkout />} /> */}
             {/* user routes */}
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/dashboard/user" element={<User />} />

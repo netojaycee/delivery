@@ -2,12 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation, Outlet, Navigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Loader from "../Loader";
+import { useLoading } from "../../context/LoadingContext";
 
 
 const RequireAuth = ({ allowedRoles }) => {
   const { auth } = useContext(AuthContext);
   const location = useLocation();
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
+  const {isLoading, setIsLoading} = useLoading(true);
 
   useEffect(() => {
     console.log(allowedRoles)

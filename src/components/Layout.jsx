@@ -13,7 +13,6 @@ const Layout = () => {
       ) : (
         <main className="overflow-x-hidden bg-gray-200 font-serif">
           <Nav />
-
           <Outlet />
           <Footer />
         </main>
