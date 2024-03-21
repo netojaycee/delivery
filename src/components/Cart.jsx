@@ -1,15 +1,5 @@
 import React, { useContext } from "react";
-import { CartContext } from "../context/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMinus,
-  faMinusCircle,
-  faPlus,
-  faPlusCircle,
-  faSortDown,
-  faSortUp,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
 import {
   Button,
   Card,
@@ -17,8 +7,10 @@ import {
   CardHeader,
   Typography,
 } from "@material-tailwind/react";
-import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import { faTrashAlt, } from "@fortawesome/free-regular-svg-icons";
 import emptyCart from "../assets/images/emptycart.png";
+import { CartContext } from "../context/CartContext";
+import { faMinusCircle, faPlusCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Cart() {
   const {
@@ -35,7 +27,7 @@ export default function Cart() {
     <>
       <div className="flex p-2">
         <div className="grid grid-cols-2 gap-10 mt-5 mx-auto">
-          {cart.length > 0 ? (
+          {cart.length > 0 &&
             cart.map((cartItem) => (
               <div key={cartItem.id} className="">
                 <Card className="mt-3 h-[120px] w-[120px] shadow-md shadow-gray-400 ">
@@ -69,7 +61,10 @@ export default function Cart() {
                         color="blue-gray"
                         className="text-xs"
                       >
-                        N {parseFloat(cartItem.price * cartItem.amount).toFixed(2)}
+                        N{" "}
+                        {parseFloat(cartItem.price * cartItem.amount).toFixed(
+                          2
+                        )}
                       </Typography>
                     </div>
                     <div className="flex items-center gap-1 flex-row self-end flex-shrink-0">
@@ -79,36 +74,38 @@ export default function Cart() {
                           icon={faMinusCircle}
                           className="cursor-pointer hover:bg-gray-500  ease-linear duration-200"
                           style={{ color: "red" }}
-                          // size="xl"
                         />
-
                         <div>{cartItem.amount}</div>
                         <FontAwesomeIcon
                           onClick={() => increaseAmount(cartItem.id)}
                           icon={faPlusCircle}
                           className="cursor-pointer hover:bg-gray-500 ease-linear duration-200"
                           style={{ color: "green" }}
-                          // size="xl"
                         />
                       </div>
                     </div>
                   </CardBody>
                 </Card>
               </div>
-            ))
-          ) : (
-            <div className="flex flex-col items-center justify-center w-full h-full">
-              <img src={emptyCart} alt="Empty Cart" className="w-1/2" />
-              <p className="text-xl font-semibold">Your cart is empty</p>
-              <p className="text-gray-500">Add some items to your cart</p>
-            </div>
-          )}
+            ))}
         </div>
       </div>
+
+      {cart.length === 0 && (
+        <div className="flex flex-col items-center justify-center w-full h-full">
+          <img
+            src={emptyCart}
+            alt="Empty Cart"
+            className="w-full object-cover"
+          />
+          <p className="text-xl font-semibold">Your cart is empty</p>
+          <p className="text-gray-500">Add some items to your cart</p>
+        </div>
+      )}
+
       {cart.length > 0 && (
         <div className="flex flex-col items-center justify-center gap-2 w-full">
           <hr className="border border-gray-700 w-[90%] mx-auto" />
-
           <div className="flex flex-row items-center justify-between w-full">
             <div className="font-serif font-semibold">
               Total: {parseFloat(total).toFixed(2)}
@@ -123,7 +120,6 @@ export default function Cart() {
             />
           </div>
           <hr className="border border-gray-700 w-[90%] mx-auto" />
-
           <Button color="gray" ripple="light" className="">
             Proceed to Checkout
           </Button>
