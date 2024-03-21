@@ -5,24 +5,25 @@ import {
   Checkbox,
   Button,
   Typography,
+  Option,
+  Select,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import axios from "../../../api/axios";
 import { Modal } from "../../Modal";
 
 export default function Register() {
-  // State variables to store user registration details
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
+  const [role, setRole] = React.useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
 
   const toggleLoginModal = () => setLoginOpen(!loginOpen);
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -31,13 +32,14 @@ export default function Register() {
       return;
     }
     try {
-      // Send registration request to your backend server
-      const response = await axios.post("/register", { name, email, password });
-      // Assuming the response contains user data or authentication token
+      const response = await axios.post("/register", {
+        name,
+        email,
+        password,
+        role, // Include role in registration data
+      });
       console.log("User registered:", response.data);
       setLoading(false);
-      // Redirect the user to login page or dashboard
-      // Example: history.push("/login");
     } catch (error) {
       setError("Failed to register. Please try again.");
       setLoading(false);
@@ -58,7 +60,7 @@ export default function Register() {
           className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
           onSubmit={handleSubmit}
         >
-          <div className="mb-1 flex flex-col gap-6">
+          <div className="mb-1 flex flex-col gap-4">
             {error && (
               <Typography color="red" className="mt-2 text-center font-normal">
                 {error}
@@ -104,6 +106,18 @@ export default function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+              Role
+            </Typography>
+            <Select
+              label="Select Role"
+              value={role}
+              onChange={(val) => setRole(val)}
+            >
+              <Option value="html">User</Option>
+              <Option value="react">Restaurant</Option>
+              <Option value="vue">Rider</Option>
+            </Select>
           </div>
           <Checkbox
             label={
@@ -127,11 +141,16 @@ export default function Register() {
           />
 
           <Button type="submit" className="mt-6" fullWidth>
-            {loading ? "processing" : "Sign Up"}
+            {loading ? "Processing" : "Sign Up"}
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
             Already have an account?{" "}
-            <Modal open={loginOpen} onClose={toggleLoginModal} type="login" triggerText={"Sign In"} />
+            <Modal
+              open={loginOpen}
+              onClose={toggleLoginModal}
+              type="login"
+              triggerText="Sign In"
+            />
           </Typography>
         </form>
       </Card>
