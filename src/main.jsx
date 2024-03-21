@@ -6,18 +6,21 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { LoadingProvider } from "./context/LoadingContext.jsx";
 import WishProvider from "./context/WishContext.jsx";
 import CartProvider from "./context/CartContext.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <LoadingProvider>
-        <WishProvider>
-          <CartProvider>
-            <Routes>
-              <Route path="/*" element={<App />} />
-            </Routes>
-          </CartProvider>
-        </WishProvider>
+        <AuthProvider>
+          <WishProvider>
+            <CartProvider>
+              <Routes>
+                <Route path="/*" element={<App />} />
+              </Routes>
+            </CartProvider>
+          </WishProvider>
+        </AuthProvider>
       </LoadingProvider>
     </BrowserRouter>
   </React.StrictMode>

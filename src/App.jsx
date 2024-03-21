@@ -9,19 +9,67 @@ import User from "./pages/dashboard/User";
 import Admin from "./pages/dashboard/Admin";
 import Rider from "./pages/dashboard/Rider";
 import RestaurantDash from "./pages/dashboard/Restaurant";
+import SpecialLayout from "./components/pageComponents/dashboard/SpecialLayout";
+import PersistLogin from "./components/hook/PersistLogin";
+import RequireAuth from "./components/hook/RequireAuth";
+import Unauthorized from "./components/Unauthorized";
 
 function App() {
+  const ROLES = {
+    User: "user",
+    Admin: "admin",
+    Rider: "rider",
+    Restaurant: "restaurant",
+  };
+
   return (
     <>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/restaurant/*" element={<Restaurant />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/dashboard/user" element={<User />} />
-          <Route path="/dashboard/admin" element={<Admin />} />
-          <Route path="/dashboard/rider" element={<Rider />} />
-          <Route path="/dashboard/restaurant" element={<RestaurantDash />} />
+        <Route element={<PersistLogin />}>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/restaurant/*" element={<Restaurant />} />
+            <Route path="/checkout" element={<Checkout />} />
+            {/* user routes */}
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/dashboard/user" element={<User />} />
+              <Route path="/checkout" element={<Checkout />} />
+            </Route>
+            <Route
+              element={
+                <RequireAuth
+                  allowedRoles={[
+                    ROLES.Admin,
+                    ROLES.User,
+                    ROLES.Rider,
+                    ROLES.Restaurant,
+                  ]}
+                />
+              }
+            >
+              <Route path="unauthorized" element={<Unauthorized />} />
+            </Route>
+          </Route>
+          <Route path="*" element={<Error />} />
+        </Route>
+        <Route element={<PersistLogin />}>
+          <Route path="protected/" element={<SpecialLayout />}>
+            {/* admin routes */}
+            <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+              <Route path="admin-dashboard" element={<Admin />} />
+            </Route>
+            {/* rider routes */}
+            <Route element={<RequireAuth allowedRoles={[ROLES.Rider]} />}>
+              <Route path="rider-dashboard" element={<Rider />} />
+            </Route>
+            {/* restaurant routes */}
+            <Route element={<RequireAuth allowedRoles={[ROLES.Restaurant]} />}>
+              <Route
+                path="restaurant-dashboard"
+                element={<RestaurantDash />}
+              />
+            </Route>
+          </Route>
         </Route>
       </Routes>
       <ToastContainer
