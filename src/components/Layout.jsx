@@ -11,7 +11,7 @@ const Layout = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <main className="overflow-x-hidden bg-gray-200">
+        <main className="overflow-x-hidden bg-gray-200 font-serif">
           <Nav />
 
           <Outlet />

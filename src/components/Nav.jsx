@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "@material-tailwind/react";
 import DrawerRight from "./Drawer";
+import { Link } from "react-router-dom";
 
 export default function Nav() {
   const [favoritesOpen, setFavoritesOpen] = useState(false);
@@ -20,7 +21,9 @@ export default function Nav() {
     <nav className="w-full py-5 shadow-md bg-white mb-5">
       <div className="flex items-center justify-between w-[90%] mx-auto ">
         <div className="flex items-center mr-2">
-          <img src="" alt="logo" className="flex-shrink-0" />
+          <Link to={"/"}>
+            <img src="" alt="logo" className="flex-shrink-0" />
+          </Link>
           <div className="ml-2 flex flex-wrap">
             <input
               className="w-full border-b border-gray-900 px-2 text-xs md:text-[18px]"
