@@ -46,7 +46,7 @@ export default function FoodList() {
         </div>
       </div>
       <div className="flex p-3 ">
-        <div className="flex flex-wrap gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 mt-8 mx-auto">
           {filteredFood.map((food) => (
             <div key={food.id} className="">
               <FoodCard food={food} restaurant={selectedRestaurant} />

@@ -9,10 +9,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "@material-tailwind/react";
 import DrawerRight from "./Drawer";
 import { Link } from "react-router-dom";
+import { Modal } from "./Modal";
 
 export default function Nav() {
   const [favoritesOpen, setFavoritesOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+
+  const [loginOpen, setLoginOpen] = useState(false);
+
+  const toggleLoginModal = () => setLoginOpen(!loginOpen);
 
   const toggleFavoritesDrawer = () => setFavoritesOpen(!favoritesOpen);
   const toggleCartDrawer = () => setCartOpen(!cartOpen);
@@ -47,11 +52,7 @@ export default function Nav() {
             style={{ color: "white" }}
             onClick={toggleCartDrawer}
           />
-          <FontAwesomeIcon
-            icon={faPerson}
-            className="border p-2 rounded-full bg-gray-900 mr-2 cursor-pointer"
-            style={{ color: "white" }}
-          />
+          <Modal open={loginOpen} onClose={toggleLoginModal} type="login" />
         </div>
       </div>
       <div className="md:hidden mt-4 w-[90%] mx-auto">

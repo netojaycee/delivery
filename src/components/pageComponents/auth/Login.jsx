@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
-import axios from "../api/axios";
+import axios from "../../../api/axios";
+import { Modal } from "../../Modal";
 
 export default function Login() {
   // State variables to store email and password
@@ -10,6 +10,21 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [registerOpen, setRegisterOpen] = useState(false);
+
+  const [forgotPassOpen, setForgotPassOpen] = useState(false);
+
+  const toggleRegisterModal = () => {
+    setRegisterOpen(!registerOpen);
+    // Close the forgot password modal if it's open
+    if (forgotPassOpen) setForgotPassOpen(false);
+  };
+
+  const toggleForgotPassModal = () => {
+    setForgotPassOpen(!forgotPassOpen);
+    // Close the register modal if it's open
+    if (registerOpen) setRegisterOpen(false);
+  };
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,13 +39,13 @@ export default function Login() {
       // Example: history.push("/dashboard");
     } catch (error) {
       setError("Invalid email or password. Please try again.", error);
-      setLoading(false)
+      setLoading(false);
       console.error("Login failed:", error);
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-screen font-serif">
+    <div className="flex items-center justify-center font-serif">
       <Card color="transparent" shadow={false}>
         <Typography variant="h4" color="blue-gray" className="text-center">
           Sign In
@@ -80,17 +95,27 @@ export default function Login() {
           </div>
 
           <Button type="submit" className="mt-6" fullWidth>
-          {loading ? "processing" : "Sign In"}
+            {loading ? "processing" : "Sign In"}
           </Button>
 
-          <Typography color="gray" className="mt-4 text-center font-normal flex justify-between">
-            <span>new to SendUs?{" "}
-            <Link to={"/register"} className="font-medium text-purple-400">
-                Sign Up
-            </Link></span>
-            <Link to={"/forgot-password"} className="font-medium text-purple-400">
-                forgot Password?
-            </Link>
+          <Typography
+            color="gray"
+            className="mt-4 text-center font-normal flex justify-between"
+          >
+            <span>
+              new to SendUs?{" "}
+              <Modal
+                open={registerOpen}
+                onClose={toggleRegisterModal}
+                type="register"
+              />
+            </span>
+
+            <Modal
+              open={forgotPassOpen}
+              onClose={toggleForgotPassModal}
+              type="forgotPass"
+            />
           </Typography>
         </form>
       </Card>

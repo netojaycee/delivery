@@ -36,12 +36,14 @@ export default function RestaurantCard({ restaurant }) {
   const handleVisitNow = () => {
     // Encode the restaurant name to include in the URL
     const encodedName = encodeURIComponent(restaurant.name);
-    navigate(`/restaurant/${encodedName}`, { state: { restaurant: restaurant } });
+    navigate(`/restaurant/${encodedName}`, {
+      state: { restaurant: restaurant },
+    });
   };
 
   return (
     <>
-      <Card className="mt-6 w-[200px] shadow-lg shadow-gray-600 ">
+      <Card className="mt-6 w-[200px] shadow-lg shadow-gray-600">
         <CardHeader color="blue-gray" className="">
           <img
             src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"

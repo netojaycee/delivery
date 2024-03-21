@@ -7,7 +7,8 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import axios from "../api/axios";
+import axios from "../../../api/axios";
+import { Modal } from "../../Modal";
 
 export default function Register() {
   // State variables to store user registration details
@@ -17,7 +18,9 @@ export default function Register() {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
 
+  const toggleLoginModal = () => setLoginOpen(!loginOpen);
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -128,9 +131,7 @@ export default function Register() {
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
             Already have an account?{" "}
-            <Link to="/login" className="font-medium text-purple-400">
-              Sign In
-            </Link>
+            <Modal open={loginOpen} onClose={toggleLoginModal} type="login" triggerText={"Sign In"} />
           </Typography>
         </form>
       </Card>

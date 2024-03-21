@@ -34,11 +34,11 @@ export default function Cart() {
   return (
     <>
       <div className="flex p-2">
-        <div className="flex flex-wrap gap-3">
+        <div className="grid grid-cols-2 gap-10 mt-5 mx-auto">
           {cart.length > 0 ? (
             cart.map((cartItem) => (
-              <div key={cartItem.id} className="my-2">
-                <Card className="mt-3 h-[120px] w-[100px] shadow-md shadow-gray-400 ">
+              <div key={cartItem.id} className="">
+                <Card className="mt-3 h-[120px] w-[120px] shadow-md shadow-gray-400 ">
                   <CardHeader color="blue-gray" className="">
                     <img
                       src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
