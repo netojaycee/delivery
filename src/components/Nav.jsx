@@ -17,7 +17,7 @@ export default function Nav() {
   const toggleCartDrawer = () => setCartOpen(!cartOpen);
 
   return (
-    <nav className="w-full py-5 shadow-md bg-white">
+    <nav className="w-full py-5 shadow-md bg-white mb-5">
       <div className="flex items-center justify-between w-[90%] mx-auto ">
         <div className="flex items-center mr-2">
           <img src="" alt="logo" className="flex-shrink-0" />

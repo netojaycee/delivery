@@ -4,33 +4,31 @@ export const WishContext = createContext();
 
 const WishProvider = ({ children }) => {
   const [wish, setWish] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const addToWish = (data, id) => {
-    const newItem = { ...data, amount: 1 };
-    // check if item already exists
-    const wishItem = wish.find((item) => {
-      return item.id === id;
-    });
-    // if wish item exists
-    if (wishItem) {
-      const newWish = [...wish].map((item) => {
-        if (item.id === id) {
-          return { ...item, amount: wishItem.amount + 1 };
-        } else {
-          return item;
-        }
-      });
+    const newItem = { ...data };
+    const wishItemIndex = wish.findIndex((item) => item.id === id);
+
+    if (wishItemIndex !== -1) {
+      // If item already exists, remove it
+      const newWish = [...wish];
+      newWish.splice(wishItemIndex, 1);
       setWish(newWish);
+      setIsFavorite(false);
     } else {
+      // If item does not exist, add it
       setWish([...wish, newItem]);
+      setIsFavorite(true);
     }
-  // console.log(wishItem);
-};
-console.log(wish);
-  const removeFromWish = (id) => {
-    const newWish = [...wish].filter((item) => item.id !== id);
-    setWish(newWish);
   };
+
+  const removeFromWish = (id) => {
+    const newWish = wish.filter((item) => item.id !== id);
+    setWish(newWish);
+    setIsFavorite(false);
+  };
+
   const clearWish = () => {
     setWish([]);
   };
@@ -42,6 +40,8 @@ console.log(wish);
         addToWish,
         removeFromWish,
         clearWish,
+        isFavorite,
+        setIsFavorite,
       }}
     >
       {children}

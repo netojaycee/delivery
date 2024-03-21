@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 pt-[60px] pb-3 bottom-0 w-full text-white font-serif">
+    <footer className="bg-gray-900 pt-[60px] pb-3 bottom-0 w-full text-white font-serif mt-5">
       <div className="flex flex-col w-[95%] mx-auto gap-4 ">
         <div className="flex md:flex-row flex-col justify-between w-[98%] mx-auto mb-7 gap-3  items-center">
           <div className="w-[40%]">

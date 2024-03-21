@@ -29,8 +29,8 @@ const CartProvider = ({ children }) => {
 
 
 
-  const addToCart = (data, id) => {
-    const newItem = { ...data, amount: 1 };
+  const addToCart = (food, id, restaurantId) => {
+    const newItem = { ...food, amount: 1, restaurantId};
     // check if item already exists
     const cartItem = cart.find((item) => {
       return item.id === id;
@@ -50,7 +50,7 @@ const CartProvider = ({ children }) => {
     }
     // console.log(cartItem);
   };
-  // console.log(cart);
+  console.log(cart);
 
   const removeFromCart = (id) => {
     const newCart = [...cart].filter((item) => item.id !== id);

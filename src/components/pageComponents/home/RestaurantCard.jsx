@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Card,
   CardHeader,
@@ -8,26 +8,35 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faClockFour, faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
+import {
+  faClockFour,
+  faHeart as faHeartOutline,
+} from "@fortawesome/free-regular-svg-icons";
 import { WishContext } from "../../../context/WishContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 export default function RestaurantCard({ restaurant }) {
-  const [isFavorite, setIsFavorite] = useState(false);
-  const { addToWish, removeFromWish } = React.useContext(WishContext);
+  const { addToWish, removeFromWish, wish } = React.useContext(WishContext);
+  const navigate = useNavigate();
+
+  const isFavorite = wish.some((item) => item.id === restaurant.id);
 
   const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
     if (!isFavorite) {
-      // If not in wishlist, add to wishlist
       addToWish(restaurant, restaurant.id);
       toast.success(`${restaurant.name} added to wishlist`);
     } else {
-      // If already in wishlist, remove from wishlist
       removeFromWish(restaurant.id);
       toast.success(`${restaurant.name} removed from wishlist`);
     }
+  };
+
+  const handleVisitNow = () => {
+    // Encode the restaurant name to include in the URL
+    const encodedName = encodeURIComponent(restaurant.name);
+    navigate(`/restaurant/${encodedName}`, { state: { restaurant: restaurant } });
   };
 
   return (
@@ -59,7 +68,7 @@ export default function RestaurantCard({ restaurant }) {
               10 - 25 mins
             </Typography>
           </div>
-          <Button color="gray" ripple="light">
+          <Button color="gray" ripple="light" onClick={handleVisitNow}>
             Visit now
           </Button>
         </CardBody>

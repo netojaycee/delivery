@@ -15,6 +15,11 @@ export default function DrawerRight({ open, onClose, type }) {
       <div className="mb-6 flex items-center justify-between">
         <Typography variant="h5" color="blue-gray">
           {type === "favorites" ? "Wishlist" : "Cart"}
+          <hr
+            className={`${
+              type === "left-1/2"
+            } absolute w-[30%] border-gray-500 border rounded`}
+          />
         </Typography>
         <IconButton variant="text" color="blue-gray" onClick={onClose}>
           <svg
@@ -33,9 +38,14 @@ export default function DrawerRight({ open, onClose, type }) {
           </svg>
         </IconButton>
       </div>
-      <Typography color="gray" className="mb-8 pr-4 font-normal">
-        {type === "favorites" ? <Wishlist /> : <Cart />}
-      </Typography>
+      <div
+        className="overflow-y-auto"
+        style={{ maxHeight: "calc(100vh - 100px)" }}
+      >
+        <Typography color="gray" className="pr-4 font-normal">
+          {type === "favorites" ? <Wishlist /> : <Cart />}
+        </Typography>
+      </div>
     </Drawer>
   );
 }
