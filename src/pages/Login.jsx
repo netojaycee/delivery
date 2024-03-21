@@ -88,7 +88,7 @@ export default function Login() {
             <Link to={"/register"} className="font-medium text-purple-400">
                 Sign Up
             </Link></span>
-            <Link to={"/register"} className="font-medium text-purple-400">
+            <Link to={"/forgot-password"} className="font-medium text-purple-400">
                 forgot Password?
             </Link>
           </Typography>
