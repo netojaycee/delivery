@@ -12,6 +12,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "@material-tailwind/react";
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from '../assets/images/logo.png';
+
 
 export default function Footer() {
   return (
@@ -19,7 +21,7 @@ export default function Footer() {
       <div className="flex flex-col w-[95%] mx-auto gap-4 ">
         <div className="flex md:flex-row flex-col justify-between w-[98%] mx-auto mb-7 gap-3  items-center">
           <div className="w-[40%]">
-            <img src="" alt="logo" className="" />
+          <img src={logo} alt="logo" className="w-[150px] h-[50px] object-cover flex-shrink-0" />
           </div>
           <div className="flex flex-col gap-3">
             <p className="text-xs">
