@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   faHeart,
   faLocationDot,
+  faPerson,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,7 +10,8 @@ import { Input } from "@material-tailwind/react";
 import DrawerRight from "./Drawer";
 import { Link } from "react-router-dom";
 import { Modal } from "./Modal";
-import logo from '../assets/images/logo.png';
+import logo from "../assets/images/logo.png";
+import AuthContext from "../context/AuthContext";
 
 export default function Nav() {
   const [favoritesOpen, setFavoritesOpen] = useState(false);
@@ -17,6 +19,7 @@ export default function Nav() {
   const [cartOpen, setCartOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
 
+  const { auth } = useContext(AuthContext);
   const toggleLoginModal = () => setLoginOpen(!loginOpen);
   const toggleFavoritesDrawer = () => setFavoritesOpen(!favoritesOpen);
   const toggleCartDrawer = () => setCartOpen(!cartOpen);
@@ -60,10 +63,14 @@ export default function Nav() {
       <div className="flex items-center justify-between w-[90%] mx-auto">
         <div className="flex items-center mr-2">
           <Link to={"/"}>
-          <img src={logo} alt="logo" className="w-[150px] h-[50px] object-cover flex-shrink-0" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-[150px] h-[50px] object-cover flex-shrink-0"
+            />
           </Link>
           <div className="ml-2 flex items-center">
-            <FontAwesomeIcon icon={faLocationDot} style={{color: 'green'}}/>
+            <FontAwesomeIcon icon={faLocationDot} style={{ color: "green" }} />
             <input
               className="w-full border-b border-gray-900 px-2 text-xs md:text-sm py-1 focus:outline-none focus:border-blue-500"
               placeholder="Enter Address"
@@ -74,7 +81,7 @@ export default function Nav() {
           </div>
         </div>
         <div className="md:block hidden w-[40%]">
-          <Input variant="" className="" />
+          <Input className="" />
         </div>
         <div className="flex items-center">
           <FontAwesomeIcon
@@ -89,11 +96,21 @@ export default function Nav() {
             style={{ color: "white" }}
             onClick={toggleCartDrawer}
           />
-          <Modal open={loginOpen} onClose={toggleLoginModal} type="login" />
+          {auth?.user ? (
+            <Link to={"/"}>
+              <FontAwesomeIcon
+                icon={faPerson}
+                className="border p-2 rounded-full bg-gray-900 mr-2 cursor-pointer"
+                style={{ color: "white" }}
+              />
+            </Link>
+          ) : (
+            <Modal open={loginOpen} onClose={toggleLoginModal} type="login" />
+          )}
         </div>
       </div>
       <div className="md:hidden mt-4 w-[90%] mx-auto">
-        <Input variant="" className="" />
+        <Input className="" />
       </div>
       <DrawerRight
         open={favoritesOpen}

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useLocation, Outlet, Navigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import Loader from "../Loader";
 import { useLoading } from "../../context/LoadingContext";
 
 
@@ -9,26 +8,20 @@ const RequireAuth = ({ allowedRoles }) => {
   const { auth } = useContext(AuthContext);
   const location = useLocation();
   // const [isLoading, setIsLoading] = useState(true);
-  const {isLoading, setIsLoading} = useLoading(true);
+  const {isLoading, setIsLoading} = useLoading();
 
   useEffect(() => {
     console.log(allowedRoles)
-    // console.log(auth.profile.role)
-
-    const delayRedirect = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000); // Adjust the delay time as needed
-
-    return () => clearTimeout(delayRedirect);
+    console.log(auth?.user?.role)
   }, []);
 
   if (isLoading) {
     // Return null during the loading period
-    return <Loader />
-  } else if (allowedRoles.includes(auth?.profile?.role)) {
+    return;
+  } else if (allowedRoles.includes(auth?.user?.role)) {
     // If the user has one of the allowed roles, render the child routes
     return <Outlet />;
-  } else if (auth?.profile) {
+  } else if (auth?.user) {
     // If the user is logged in but doesn't have the required role, navigate to unauthorized page
     return <Navigate to="/unauthorized" state={{ from: location }} replace />;
   } else {

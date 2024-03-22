@@ -28,7 +28,7 @@ export default function Footer() {
               Have any complaints or inquiries? Send us a message
             </p>
             <div className="flex flex-row gap-2 items-center">
-              <Input type="text" variant="" className="text-white" />
+              <Input type="text" className="text-white" />
               <FontAwesomeIcon
                 icon={faArrowRight}
                 className="p-2 border rounded-full"

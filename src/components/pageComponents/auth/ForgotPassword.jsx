@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import axios from "../../../api/axios";
+import { toast } from "react-toastify";
 
-
-export default function ForgotPassword() {
+export default function ForgotPassword({onClose}) {
   // State variables to store email and password
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -16,16 +16,18 @@ export default function ForgotPassword() {
     setLoading(true);
     try {
       // Send login request to your backend server
-      const response = await axios.post("/login", { email, password });
+      const response = await axios.post("/api/auth/forgot-password", { email });
       // Assuming the response contains user data or authentication token
       console.log("User logged in:", response.data);
+      toast.success(response.data.message);
       setLoading(false);
+      onclose();
       // Redirect the user to dashboard or home page
       // Example: history.push("/dashboard");
     } catch (error) {
-      setError("Invalid email or password. Please try again.", error);
+      setError(error.response.data.error);
       setLoading(false);
-      console.error("Login failed:", error);
+      console.error("failed to send email reset token:", error);
     }
   };
 
@@ -62,7 +64,6 @@ export default function ForgotPassword() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-        
           </div>
 
           <Button type="submit" className="mt-6" fullWidth>

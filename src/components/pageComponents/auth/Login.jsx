@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import { Modal } from "../../Modal";
+import AuthContext from "../../../context/AuthContext";
+import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
-export default function Login() {
+export default function Login({ onClose }) {
   // State variables to store email and password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { setAuth } = React.useContext(AuthContext);
 
   const [registerOpen, setRegisterOpen] = useState(false);
 
@@ -16,29 +20,39 @@ export default function Login() {
 
   const toggleRegisterModal = () => {
     setRegisterOpen(!registerOpen);
-    // Close the forgot password modal if it's open
-    if (forgotPassOpen) setForgotPassOpen(false);
   };
 
   const toggleForgotPassModal = () => {
     setForgotPassOpen(!forgotPassOpen);
-    // Close the register modal if it's open
-    if (registerOpen) setRegisterOpen(false);
   };
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Send login request to your backend server
-      const response = await axios.post("/login", { email, password });
-      // Assuming the response contains user data or authentication token
-      console.log("User logged in:", response.data);
+      const response = await axios.post("api/auth/login", { email, password });
+
       setLoading(false);
-      // Redirect the user to dashboard or home page
-      // Example: history.push("/dashboard");
+      if (response.data.AccessToken) {
+        localStorage.setItem("user", JSON.stringify(response.data.AccessToken));
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const decodedToken = jwtDecode(storedUser);
+        const { email, userId, role } = decodedToken;
+
+        setAuth({
+          user: {
+            email,
+            userId,
+            role,
+          },
+        });
+        setEmail("");
+        setPassword("");
+        toast.success("Login successful");
+        onClose();
+      }
     } catch (error) {
-      setError("Invalid email or password. Please try again.", error);
+      setError(error.response.data.message);
       setLoading(false);
       console.error("Login failed:", error);
     }

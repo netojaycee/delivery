@@ -70,7 +70,7 @@ export default function RestaurantCard({ restaurant }) {
               10 - 25 mins
             </Typography>
           </div>
-          <Button color="gray" ripple="light" onClick={handleVisitNow}>
+          <Button color="gray" ripple={true} onClick={handleVisitNow}>
             Visit now
           </Button>
         </CardBody>

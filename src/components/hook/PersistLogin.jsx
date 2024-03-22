@@ -31,7 +31,7 @@ const PersistLogin = () => {
       }
     };
 
-    if (!auth?.profile) {
+    if (!auth?.user) {
       verifyRefreshToken();
     } else {
       setIsLoading(false);

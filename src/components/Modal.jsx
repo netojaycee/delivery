@@ -44,7 +44,10 @@ export function Modal({ open, onClose, type, triggerText }) {
           Sign Up
         </span>
       ) : (
-        <span onClick={handleOpen} className="font-medium text-purple-400 cursor-pointer">
+        <span
+          onClick={handleOpen}
+          className="font-medium text-purple-400 cursor-pointer"
+        >
           forgot Password?
         </span>
       )}
@@ -52,11 +55,11 @@ export function Modal({ open, onClose, type, triggerText }) {
         {/* <DialogHeader>Its a simple dialog.</DialogHeader> */}
         <DialogBody>
           {type === "login" ? (
-            <Login />
+            <Login onClose={onClose} />
           ) : type === "register" ? (
-            <Register />
+            <Register onClose={onClose} />
           ) : (
-            <ForgotPassword />
+            <ForgotPassword onClose={onClose} />
           )}
         </DialogBody>
       </Dialog>

@@ -11,10 +11,12 @@ import {
 import { Link } from "react-router-dom";
 import axios from "../../../api/axios";
 import { Modal } from "../../Modal";
+import { toast } from "react-toastify";
 
-export default function Register() {
+export default function Register({ onClose }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [role, setRole] = React.useState("");
@@ -32,16 +34,20 @@ export default function Register() {
       return;
     }
     try {
-      const response = await axios.post("/register", {
+      const response = await axios.post("/api/auth/signup", {
         name,
         email,
+        phone,
         password,
-        role, // Include role in registration data
       });
-      console.log("User registered:", response.data);
+      // console.log("User registered:", response.data);
       setLoading(false);
+      if (response.data.message === "User registered successfully") {
+        onClose();
+        toast.success("Registration successful! Please login.");
+      }
     } catch (error) {
-      setError("Failed to register. Please try again.");
+      setError(error.response.data.error);
       setLoading(false);
       console.error("Registration failed:", error);
     }
@@ -93,6 +99,19 @@ export default function Register() {
               onChange={(e) => setEmail(e.target.value)}
             />
             <Typography variant="h6" color="blue-gray" className="-mb-3">
+              Your Phone
+            </Typography>
+            <Input
+              size="lg"
+              placeholder="090123456789"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
               Password
             </Typography>
             <Input
@@ -106,18 +125,6 @@ export default function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Role
-            </Typography>
-            <Select
-              label="Select Role"
-              value={role}
-              onChange={(val) => setRole(val)}
-            >
-              <Option value="html">User</Option>
-              <Option value="react">Restaurant</Option>
-              <Option value="vue">Rider</Option>
-            </Select>
           </div>
           <Checkbox
             label={

@@ -13,6 +13,7 @@ import SpecialLayout from "./components/pageComponents/dashboard/SpecialLayout";
 import PersistLogin from "./components/hook/PersistLogin";
 import RequireAuth from "./components/hook/RequireAuth";
 import Unauthorized from "./components/Unauthorized";
+import Error from "./components/Error";
 
 function App() {
   const ROLES = {
@@ -73,7 +74,7 @@ function App() {
         </Route>
       </Routes>
       <ToastContainer
-        position="bottom-right"
+        position="top-right"
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -83,6 +84,7 @@ function App() {
         draggable
         pauseOnHover
         theme="light"
+        // style={{ zIndex: 9999 }}
       />
     </>
   );

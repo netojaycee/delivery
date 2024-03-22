@@ -1,28 +1,32 @@
 import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import { jwtDecode } from "jwt-decode";
 
 const useRefreshToken = () => {
   const { setAuth } = useContext(AuthContext);
   const location = useLocation();
 
   const refresh = () => {
-    const token = localStorage.getItem("token");
-    const profile = JSON.parse(localStorage.getItem("profile"));
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const decodedToken = jwtDecode(storedUser);
+    const { email, userId, role } = decodedToken;
 
-    if (!token || !profile) {
-      // Redirect to action page if token or profile is missing
+    if (!storedUser) {
+      setAuth({});
       return <Navigate to="/" state={{ from: location }} replace />;
     }
 
-    // Set authentication state with retrieved profile and token
     setAuth((prev) => ({
       ...prev,
-      profile: profile,
-      token: token,
+      user: {
+        email,
+        userId,
+        role,
+      },
     }));
 
-    return profile;
+    return storedUser;
   };
 
   return refresh;

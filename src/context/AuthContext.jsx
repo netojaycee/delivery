@@ -11,10 +11,9 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     try {
       axios.post("/log-out");
-      localStorage.removeItem("token");
-      localStorage.removeItem("profile");
+      localStorage.removeItem("user");
       navigate('/');
-      setAuth(null);
+      setAuth({});
     } catch (err) {
       console.err(err);
     }
